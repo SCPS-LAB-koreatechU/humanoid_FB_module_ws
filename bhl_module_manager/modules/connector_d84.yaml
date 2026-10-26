@@ -1,0 +1,16 @@
+# 사용자 설계 Ø84 커넥터 (수동 어댑터). 팔꿈치 롤 축과 동축, 팔 쪽 면이 플랜지 F와 일치.
+id: connector_d84
+name: 손 커넥터 Ø84
+kind: adapter
+sides: [R, L]
+fb:
+  mechanical:
+    mates_with: elbow_flange_bhl
+    mass_kg: null
+    frames:
+      C: {xyz: [0, 0, 24.05], rpy: [0, 0, 0]}          # 손 쪽 결합면
+    ports:
+      - {name: hand, type: hand_d84, frame: C}
+  electrical: {bus: null}
+  control: {}
+  functional: {skills: []}

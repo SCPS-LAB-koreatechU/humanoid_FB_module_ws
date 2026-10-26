@@ -1,0 +1,4 @@
+# 모듈 드라이버가 올라갈 연산 노드. 모듈의 host_requirements와 비교해 장착 가능 여부를 판단한다.
+hosts:
+  control_pc: {cuda: true, usb3: true, usb: true, can: true}
+  rdk_x5:     {cuda: false, usb3: true, usb: true, can: null}   # can: 미확인

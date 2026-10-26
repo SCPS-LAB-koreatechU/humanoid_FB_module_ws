@@ -1,0 +1,27 @@
+# DexHand V1.0 손 모듈 (전완 쉘 포함). TCP는 메쉬 손바닥 중심 근사값.
+id: hand_dexhand_v1
+name: DexHand V1.0 손
+kind: end_effector
+sides: [R, L]
+fb:
+  mechanical:
+    mates_with: hand_d84
+    mass_kg: null
+    frames:
+      tcp:
+        R: {xyz: [16.5, 8.9, 311.6], rpy: [0, 0, 0]}
+        L: {xyz: [17.2, 21.6, 306.9], rpy: [0, 0, 0]}
+  electrical:
+    bus: usb_serial
+    driver: "Arduino Mega + PCA9685"
+    note: "CAN 통합 검토 중"
+    host_requirements: {usb: true}
+  control: {}
+  functional:
+    skills:
+      - name: "grasp({side}_hand)"
+        requires: {frames: [tcp]}
+      - name: "open_hand({side}_hand)"
+        requires: {frames: [tcp]}
+      - name: "hand_over({side}_hand)"
+        requires: {frames: [tcp], capabilities: ["locate_hand(person)"]}

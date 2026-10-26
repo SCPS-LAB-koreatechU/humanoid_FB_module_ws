@@ -1,0 +1,1457 @@
+[
+ {
+  "step": "A 기본 구성 (설정 파일로 전체 장착)",
+  "actions": [],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [],
+  "removed": [],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(R_hand)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   }
+  ],
+  "urdf": "examples/urdf/A.urdf"
+ },
+ {
+  "step": "B 손 교체: 오른손 분리 후 그리퍼 장착",
+  "actions": [
+   {
+    "op": "detach",
+    "args": [
+     "r_hand"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: r_hand (DexHand V1.0 손, R)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "r_conn.hand",
+     "gripper_placeholder",
+     "r_grip"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: r_grip (평행 그리퍼 (임시), R) → r_conn.hand (r_conn/C)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_grip/base",
+   "r_grip/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_gripper)",
+   "hand_over(L_hand)",
+   "hand_over(R_gripper)",
+   "handshake(L_arm, L_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [
+   "grasp(R_gripper)",
+   "hand_over(R_gripper)"
+  ],
+  "removed": [
+   "grasp(R_hand)",
+   "hand_over(R_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(R_hand)"
+  ],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(R_gripper)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   },
+   {
+    "id": "r_grip",
+    "module": "gripper_placeholder",
+    "side": "R",
+    "host": null,
+    "port": "r_conn.hand"
+   }
+  ],
+  "urdf": "examples/urdf/B.urdf"
+ },
+ {
+  "step": "A로 복귀: 그리퍼 분리, 오른손 재장착",
+  "actions": [
+   {
+    "op": "detach",
+    "args": [
+     "r_grip"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: r_grip (평행 그리퍼 (임시), R)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "r_conn.hand",
+     "hand_dexhand_v1",
+     "r_hand",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: r_hand (DexHand V1.0 손, R) → r_conn.hand (r_conn/C)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [
+   "grasp(R_hand)",
+   "hand_over(R_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(R_hand)"
+  ],
+  "removed": [
+   "grasp(R_gripper)",
+   "hand_over(R_gripper)"
+  ],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(R_hand)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   }
+  ]
+ },
+ {
+  "step": "C 오른팔 분리 (손, 커넥터 포함 하위 트리 제거)",
+  "actions": [
+   {
+    "op": "detach",
+    "args": [
+     "r_arm"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: r_hand (DexHand V1.0 손, R)",
+     "분리: r_conn (손 커넥터 Ø84, R)",
+     "분리: r_arm (BHL 팔 모듈, R)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "hand_over(L_hand)",
+   "handshake(L_arm, L_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "wave(L_arm)"
+  ],
+  "added": [],
+  "removed": [
+   "grasp(R_hand)",
+   "hand_over(R_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(R_hand)",
+   "wave(R_arm)"
+  ],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(L_hand)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   }
+  ],
+  "urdf": "examples/urdf/C.urdf"
+ },
+ {
+  "step": "A로 복귀: 오른팔, 커넥터, 손 재장착",
+  "actions": [
+   {
+    "op": "attach",
+    "args": [
+     "torso.S_R",
+     "arm_bhl",
+     "r_arm",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: r_arm (BHL 팔 모듈, R) → torso.S_R (torso/S_R)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "r_arm.flange",
+     "connector_d84",
+     "r_conn"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: r_conn (손 커넥터 Ø84, R) → r_arm.flange (r_arm/F)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "r_conn.hand",
+     "hand_dexhand_v1",
+     "r_hand",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: r_hand (DexHand V1.0 손, R) → r_conn.hand (r_conn/C)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [
+   "grasp(R_hand)",
+   "hand_over(R_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(R_hand)",
+   "wave(R_arm)"
+  ],
+  "removed": [],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(R_hand)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   }
+  ]
+ },
+ {
+  "step": "D 양손 분리",
+  "actions": [
+   {
+    "op": "detach",
+    "args": [
+     "r_hand"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: r_hand (DexHand V1.0 손, R)"
+    ]
+   },
+   {
+    "op": "detach",
+    "args": [
+     "l_hand"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: l_hand (DexHand V1.0 손, L)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [],
+  "removed": [
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)"
+  ],
+  "plan": {
+   "ok": false,
+   "call": "reject(no_grasp)",
+   "reason": "전달에 쓸 손이나 그리퍼가 없음"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   }
+  ],
+  "urdf": "examples/urdf/D.urdf"
+ },
+ {
+  "step": "A로 복귀: 양손 재장착",
+  "actions": [
+   {
+    "op": "attach",
+    "args": [
+     "r_conn.hand",
+     "hand_dexhand_v1",
+     "r_hand",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: r_hand (DexHand V1.0 손, R) → r_conn.hand (r_conn/C)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "l_conn.hand",
+     "hand_dexhand_v1",
+     "l_hand",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: l_hand (DexHand V1.0 손, L) → l_conn.hand (l_conn/C)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)"
+  ],
+  "removed": [],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(R_hand)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   }
+  ]
+ },
+ {
+  "step": "E 머리 분리 (목 모듈을 ZED 2i째로 분리)",
+  "actions": [
+   {
+    "op": "detach",
+    "args": [
+     "neck"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: head (머리 모듈 (ZED 2i))",
+     "분리: neck (목 모듈 (요, 틸트))"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R"
+  ],
+  "capabilities": [
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [],
+  "removed": [
+   "detect(object)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "locate_hand(person)",
+   "look_at(point)"
+  ],
+  "plan": {
+   "ok": false,
+   "call": "reject(no_vision)",
+   "reason": "받는 사람 손 위치를 알 수 없음 (카메라 모듈 없음)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   }
+  ],
+  "urdf": "examples/urdf/E.urdf"
+ },
+ {
+  "step": "검증 사례: 잘못된 장착 시도 후 머리 복귀",
+  "actions": [
+   {
+    "op": "attach",
+    "args": [
+     "torso.N",
+     "head_zed2i",
+     "head",
+     null,
+     "control_pc"
+    ],
+    "ok": false,
+    "msg": [
+     "포트 타입 불일치: torso.N는 head_mount, head_zed2i는 camera_1_4_20에 결합"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "torso.N",
+     "neck_pan_tilt_scs",
+     "neck",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: neck (목 모듈 (요, 틸트)) → torso.N (torso/N)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "neck.mount",
+     "head_zed2i",
+     "head",
+     null,
+     "rdk_x5"
+    ],
+    "ok": false,
+    "msg": [
+     "호스트 rdk_x5에 cuda 없음 (head_zed2i 요구)"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "torso.S_L",
+     "hand_dexhand_v1",
+     "x_hand",
+     null,
+     "control_pc"
+    ],
+    "ok": false,
+    "msg": [
+     "포트 사용 중: torso.S_L ← l_arm",
+     "포트 타입 불일치: torso.S_L는 shoulder_bhl, hand_dexhand_v1는 hand_d84에 결합"
+    ]
+   },
+   {
+    "op": "attach",
+    "args": [
+     "neck.mount",
+     "head_zed2i",
+     "head",
+     null,
+     "control_pc"
+    ],
+    "ok": true,
+    "msg": [
+     "장착: head (머리 모듈 (ZED 2i)) → neck.mount (neck/mount)"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "head/base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R",
+   "zed_camera_link"
+  ],
+  "capabilities": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [
+   "detect(object)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "locate_hand(person)",
+   "look_at(point)"
+  ],
+  "removed": [],
+  "plan": {
+   "ok": true,
+   "call": "hand_over(R_hand)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   },
+   {
+    "id": "head",
+    "module": "head_zed2i",
+    "side": null,
+    "host": "control_pc",
+    "port": "neck.mount"
+   }
+  ]
+ },
+ {
+  "step": "카메라만 분리 (목 관절은 남음)",
+  "actions": [
+   {
+    "op": "detach",
+    "args": [
+     "head"
+    ],
+    "ok": true,
+    "msg": [
+     "분리: head (머리 모듈 (ZED 2i))"
+    ]
+   }
+  ],
+  "frames": [
+   "base",
+   "l_arm/F",
+   "l_arm/base",
+   "l_arm/dh1",
+   "l_arm/dh2",
+   "l_arm/dh3",
+   "l_arm/dh4",
+   "l_arm/dh5",
+   "l_conn/C",
+   "l_conn/base",
+   "l_hand/base",
+   "l_hand/tcp",
+   "neck/base",
+   "neck/dh1",
+   "neck/dh2",
+   "neck/mount",
+   "r_arm/F",
+   "r_arm/base",
+   "r_arm/dh1",
+   "r_arm/dh2",
+   "r_arm/dh3",
+   "r_arm/dh4",
+   "r_arm/dh5",
+   "r_conn/C",
+   "r_conn/base",
+   "r_hand/base",
+   "r_hand/tcp",
+   "torso/N",
+   "torso/S_L",
+   "torso/S_R"
+  ],
+  "capabilities": [
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "added": [],
+  "removed": [
+   "detect(object)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "locate_hand(person)",
+   "look_at(point)"
+  ],
+  "plan": {
+   "ok": false,
+   "call": "reject(no_vision)",
+   "reason": "받는 사람 손 위치를 알 수 없음 (카메라 모듈 없음)"
+  },
+  "instances": [
+   {
+    "id": "torso",
+    "module": "torso_bhl",
+    "side": null,
+    "host": null,
+    "port": null
+   },
+   {
+    "id": "l_arm",
+    "module": "arm_bhl",
+    "side": "L",
+    "host": "control_pc",
+    "port": "torso.S_L"
+   },
+   {
+    "id": "l_conn",
+    "module": "connector_d84",
+    "side": "L",
+    "host": null,
+    "port": "l_arm.flange"
+   },
+   {
+    "id": "r_arm",
+    "module": "arm_bhl",
+    "side": "R",
+    "host": "control_pc",
+    "port": "torso.S_R"
+   },
+   {
+    "id": "r_conn",
+    "module": "connector_d84",
+    "side": "R",
+    "host": null,
+    "port": "r_arm.flange"
+   },
+   {
+    "id": "r_hand",
+    "module": "hand_dexhand_v1",
+    "side": "R",
+    "host": "control_pc",
+    "port": "r_conn.hand"
+   },
+   {
+    "id": "l_hand",
+    "module": "hand_dexhand_v1",
+    "side": "L",
+    "host": "control_pc",
+    "port": "l_conn.hand"
+   },
+   {
+    "id": "neck",
+    "module": "neck_pan_tilt_scs",
+    "side": null,
+    "host": "control_pc",
+    "port": "torso.N"
+   }
+  ]
+ }
+]

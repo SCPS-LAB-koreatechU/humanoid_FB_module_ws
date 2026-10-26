@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<robot name="bhl_modular">
+  <material name="torso"><color rgba="0.42 0.45 0.47 1"/></material>
+  <material name="arm"><color rgba="0.64 0.67 0.70 1"/></material>
+  <material name="if"><color rgba="0.93 0.49 0.19 1"/></material>
+  <material name="hand"><color rgba="0.85 0.83 0.79 1"/></material>
+  <material name="gripper"><color rgba="0.23 0.25 0.27 1"/></material>
+  <material name="cam"><color rgba="0.17 0.18 0.20 1"/></material>
+  <material name="servo"><color rgba="0.20 0.22 0.24 1"/></material>
+  <material name="bracket"><color rgba="0.73 0.75 0.78 1"/></material>
+  <link name="base">
+    <visual><origin xyz="0.000000 0.000000 0.707000" rpy="0.000000 -0.000000 0.000000"/><geometry><box size="0.140000 0.250000 0.246000"/></geometry><material name="torso"/></visual>
+    <visual><origin xyz="0.046500 0.000000 0.820000" rpy="0.000000 -0.000000 0.000000"/><geometry><box size="0.007000 0.124000 0.020000"/></geometry><material name="if"/></visual>
+    <visual><origin xyz="0.038000 0.000000 0.827000" rpy="0.000000 -0.000000 0.000000"/><geometry><box size="0.024000 0.056000 0.042000"/></geometry><material name="if"/></visual>
+  </link>
+  <link name="torso/S_R"/>
+  <link name="torso/S_L"/>
+  <link name="torso/N"/>
+  <link name="l_arm/base"/>
+  <link name="l_arm/q1"/>
+  <link name="l_arm/dh1"/>
+  <link name="l_arm/q2"/>
+  <link name="l_arm/dh2"/>
+  <link name="l_arm/q3"/>
+  <link name="l_arm/dh3"/>
+  <link name="l_arm/q4"/>
+  <link name="l_arm/dh4"/>
+  <link name="l_arm/q5"/>
+  <link name="l_arm/dh5"/>
+  <link name="l_arm/F"/>
+  <link name="l_conn/base">
+    <visual><origin xyz="0.000000 0.000000 0.012000" rpy="0.000000 -0.000000 0.000000"/><geometry><cylinder radius="0.042000" length="0.024050"/></geometry><material name="if"/></visual>
+  </link>
+  <link name="l_conn/C"/>
+  <link name="r_arm/base"/>
+  <link name="r_arm/q1"/>
+  <link name="r_arm/dh1"/>
+  <link name="r_arm/q2"/>
+  <link name="r_arm/dh2"/>
+  <link name="r_arm/q3"/>
+  <link name="r_arm/dh3"/>
+  <link name="r_arm/q4"/>
+  <link name="r_arm/dh4"/>
+  <link name="r_arm/q5"/>
+  <link name="r_arm/dh5"/>
+  <link name="r_arm/F"/>
+  <link name="r_conn/base">
+    <visual><origin xyz="0.000000 0.000000 0.012000" rpy="0.000000 -0.000000 0.000000"/><geometry><cylinder radius="0.042000" length="0.024050"/></geometry><material name="if"/></visual>
+  </link>
+  <link name="r_conn/C"/>
+  <link name="r_hand/base">
+    <visual><origin xyz="0.000000 0.000000 0.152000" rpy="0.000000 -0.000000 0.000000"/><geometry><box size="0.080000 0.070000 0.300000"/></geometry><material name="hand"/></visual>
+  </link>
+  <link name="r_hand/tcp"/>
+  <link name="l_hand/base">
+    <visual><origin xyz="0.000000 0.000000 0.152000" rpy="0.000000 -0.000000 0.000000"/><geometry><box size="0.080000 0.070000 0.300000"/></geometry><material name="hand"/></visual>
+  </link>
+  <link name="l_hand/tcp"/>
+  <joint name="torso__S_R_fixed" type="fixed">
+    <parent link="base"/><child link="torso/S_R"/>
+    <origin xyz="0.000000 -0.133000 0.764030" rpy="1.570796 -0.000000 0.000000"/>
+  </joint>
+  <joint name="torso__S_L_fixed" type="fixed">
+    <parent link="base"/><child link="torso/S_L"/>
+    <origin xyz="0.000000 0.133000 0.764030" rpy="-1.570796 -0.000000 0.000000"/>
+  </joint>
+  <joint name="torso__N_fixed" type="fixed">
+    <parent link="base"/><child link="torso/N"/>
+    <origin xyz="0.038000 0.000000 0.848000" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="attach__l_arm" type="revolute">
+    <parent link="torso/S_L"/><child link="l_arm/base"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="0.000000" effort="0.0" velocity="0.0"/>
+  </joint>
+  <!-- arm_left_shoulder_pitch_joint: mechanical range [-90.0, 45.0] deg (fb.mechanical), soft limits [-90.0, 45.0] deg (fb.control) -->
+  <joint name="arm_left_shoulder_pitch_joint" type="revolute">
+    <parent link="l_arm/base"/><child link="l_arm/q1"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-1.570796" upper="0.785398" effort="20" velocity="15"/>
+  </joint>
+  <joint name="l_arm__dh1_fixed" type="fixed">
+    <parent link="l_arm/q1"/><child link="l_arm/dh1"/>
+    <origin xyz="0.000000 0.000000 0.043000" rpy="1.570796 -0.000000 1.570796"/>
+  </joint>
+  <!-- arm_left_shoulder_roll_joint: mechanical range [-15.0, 75.0] deg (fb.mechanical), soft limits [-15.0, 75.0] deg (fb.control) -->
+  <joint name="arm_left_shoulder_roll_joint" type="revolute">
+    <parent link="l_arm/dh1"/><child link="l_arm/q2"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.261799" upper="1.308997" effort="20" velocity="15"/>
+  </joint>
+  <joint name="l_arm__dh2_fixed" type="fixed">
+    <parent link="l_arm/q2"/><child link="l_arm/dh2"/>
+    <origin xyz="-0.000000 0.000000 0.000000" rpy="1.570796 -0.000000 1.832596"/>
+  </joint>
+  <!-- arm_left_shoulder_yaw_joint: mechanical range [-45.0, 45.0] deg (fb.mechanical), soft limits [-45.0, 45.0] deg (fb.control) -->
+  <joint name="arm_left_shoulder_yaw_joint" type="revolute">
+    <parent link="l_arm/dh2"/><child link="l_arm/q3"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.785398" upper="0.785398" effort="20" velocity="15"/>
+  </joint>
+  <joint name="l_arm__dh3_fixed" type="fixed">
+    <parent link="l_arm/q3"/><child link="l_arm/dh3"/>
+    <origin xyz="0.000000 -0.000000 0.166000" rpy="1.570796 -0.000000 -1.570796"/>
+  </joint>
+  <!-- arm_left_elbow_pitch_joint: mechanical range [0.0, 90.0] deg (fb.mechanical), soft limits [0.0, 90.0] deg (fb.control) -->
+  <joint name="arm_left_elbow_pitch_joint" type="revolute">
+    <parent link="l_arm/dh3"/><child link="l_arm/q4"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="1.570796" effort="20" velocity="15"/>
+  </joint>
+  <joint name="l_arm__dh4_fixed" type="fixed">
+    <parent link="l_arm/q4"/><child link="l_arm/dh4"/>
+    <origin xyz="-0.000000 -0.000000 -0.001000" rpy="1.570796 -0.000000 -3.141593"/>
+  </joint>
+  <!-- arm_left_elbow_roll_joint: mechanical range [-45.0, 45.0] deg (fb.mechanical), soft limits [-45.0, 45.0] deg (fb.control) -->
+  <joint name="arm_left_elbow_roll_joint" type="revolute">
+    <parent link="l_arm/dh4"/><child link="l_arm/q5"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.785398" upper="0.785398" effort="20" velocity="15"/>
+  </joint>
+  <joint name="l_arm__dh5_fixed" type="fixed">
+    <parent link="l_arm/q5"/><child link="l_arm/dh5"/>
+    <origin xyz="0.000000 0.000000 0.123000" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="l_arm__F_fixed" type="fixed">
+    <parent link="l_arm/dh5"/><child link="l_arm/F"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="attach__l_conn" type="revolute">
+    <parent link="l_arm/F"/><child link="l_conn/base"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="0.000000" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="l_conn__C_fixed" type="fixed">
+    <parent link="l_conn/base"/><child link="l_conn/C"/>
+    <origin xyz="0.000000 0.000000 0.024050" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="attach__r_arm" type="revolute">
+    <parent link="torso/S_R"/><child link="r_arm/base"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="0.000000" effort="0.0" velocity="0.0"/>
+  </joint>
+  <!-- arm_right_shoulder_pitch_joint: mechanical range [-45.0, 90.0] deg (fb.mechanical), soft limits [-45.0, 90.0] deg (fb.control) -->
+  <joint name="arm_right_shoulder_pitch_joint" type="revolute">
+    <parent link="r_arm/base"/><child link="r_arm/q1"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.785398" upper="1.570796" effort="20" velocity="15"/>
+  </joint>
+  <joint name="r_arm__dh1_fixed" type="fixed">
+    <parent link="r_arm/q1"/><child link="r_arm/dh1"/>
+    <origin xyz="0.000000 0.000000 0.043000" rpy="1.570796 -0.000000 1.570796"/>
+  </joint>
+  <!-- arm_right_shoulder_roll_joint: mechanical range [-75.0, 15.0] deg (fb.mechanical), soft limits [-75.0, 15.0] deg (fb.control) -->
+  <joint name="arm_right_shoulder_roll_joint" type="revolute">
+    <parent link="r_arm/dh1"/><child link="r_arm/q2"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-1.308997" upper="0.261799" effort="20" velocity="15"/>
+  </joint>
+  <joint name="r_arm__dh2_fixed" type="fixed">
+    <parent link="r_arm/q2"/><child link="r_arm/dh2"/>
+    <origin xyz="-0.000000 -0.000000 0.000000" rpy="1.570796 -0.000000 -1.832596"/>
+  </joint>
+  <!-- arm_right_shoulder_yaw_joint: mechanical range [-45.0, 45.0] deg (fb.mechanical), soft limits [-45.0, 45.0] deg (fb.control) -->
+  <joint name="arm_right_shoulder_yaw_joint" type="revolute">
+    <parent link="r_arm/dh2"/><child link="r_arm/q3"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.785398" upper="0.785398" effort="20" velocity="15"/>
+  </joint>
+  <joint name="r_arm__dh3_fixed" type="fixed">
+    <parent link="r_arm/q3"/><child link="r_arm/dh3"/>
+    <origin xyz="0.000000 0.000000 0.166000" rpy="1.570796 -0.000000 1.570796"/>
+  </joint>
+  <!-- arm_right_elbow_pitch_joint: mechanical range [-90.0, 0.0] deg (fb.mechanical), soft limits [-90.0, 0.0] deg (fb.control) -->
+  <joint name="arm_right_elbow_pitch_joint" type="revolute">
+    <parent link="r_arm/dh3"/><child link="r_arm/q4"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-1.570796" upper="0.000000" effort="20" velocity="15"/>
+  </joint>
+  <joint name="r_arm__dh4_fixed" type="fixed">
+    <parent link="r_arm/q4"/><child link="r_arm/dh4"/>
+    <origin xyz="-0.000000 -0.000000 -0.001000" rpy="1.570796 -0.000000 -3.141593"/>
+  </joint>
+  <!-- arm_right_elbow_roll_joint: mechanical range [-45.0, 45.0] deg (fb.mechanical), soft limits [-45.0, 45.0] deg (fb.control) -->
+  <joint name="arm_right_elbow_roll_joint" type="revolute">
+    <parent link="r_arm/dh4"/><child link="r_arm/q5"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="-0.785398" upper="0.785398" effort="20" velocity="15"/>
+  </joint>
+  <joint name="r_arm__dh5_fixed" type="fixed">
+    <parent link="r_arm/q5"/><child link="r_arm/dh5"/>
+    <origin xyz="-0.000000 0.000000 0.123000" rpy="0.000000 -0.000000 3.141593"/>
+  </joint>
+  <joint name="r_arm__F_fixed" type="fixed">
+    <parent link="r_arm/dh5"/><child link="r_arm/F"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="attach__r_conn" type="revolute">
+    <parent link="r_arm/F"/><child link="r_conn/base"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="0.000000" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="r_conn__C_fixed" type="fixed">
+    <parent link="r_conn/base"/><child link="r_conn/C"/>
+    <origin xyz="0.000000 0.000000 0.024050" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="attach__r_hand" type="revolute">
+    <parent link="r_conn/C"/><child link="r_hand/base"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="0.000000" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="r_hand__tcp_fixed" type="fixed">
+    <parent link="r_hand/base"/><child link="r_hand/tcp"/>
+    <origin xyz="0.016500 0.008900 0.311600" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+  <joint name="attach__l_hand" type="revolute">
+    <parent link="l_conn/C"/><child link="l_hand/base"/>
+    <origin xyz="0.000000 0.000000 0.000000" rpy="0.000000 -0.000000 0.000000"/>
+    <axis xyz="0.000000 0.000000 1.000000"/>
+    <limit lower="0.000000" upper="0.000000" effort="0.0" velocity="0.0"/>
+  </joint>
+  <joint name="l_hand__tcp_fixed" type="fixed">
+    <parent link="l_hand/base"/><child link="l_hand/tcp"/>
+    <origin xyz="0.017200 0.021600 0.306900" rpy="0.000000 -0.000000 0.000000"/>
+  </joint>
+</robot>

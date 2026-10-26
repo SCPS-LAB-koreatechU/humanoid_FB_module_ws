@@ -1,0 +1,19 @@
+# 평행 그리퍼 자리표시 모듈 (실제 모델로 교체 필요). TCP = 손가락 패드 중심.
+id: gripper_placeholder
+name: 평행 그리퍼 (임시)
+kind: end_effector
+sides: [R, L]
+fb:
+  mechanical:
+    mates_with: hand_d84
+    mass_kg: null
+    frames:
+      tcp: {xyz: [0, 0, 140], rpy: [0, 0, 0]}
+  electrical: {bus: null}
+  control: {}
+  functional:
+    skills:
+      - name: "grasp({side}_gripper)"
+        requires: {frames: [tcp]}
+      - name: "hand_over({side}_gripper)"
+        requires: {frames: [tcp], capabilities: ["locate_hand(person)"]}

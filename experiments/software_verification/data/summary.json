@@ -1,0 +1,162 @@
+{
+ "kinematics": {
+  "R": {
+   "n": 2000,
+   "max_um": 6.707081314404438,
+   "median_um": 2.8615777162129246,
+   "p95_um": 5.617503904365861,
+   "max_rot_deg": 0.0010564978855354251
+  },
+  "L": {
+   "n": 2000,
+   "max_um": 6.619769840919446,
+   "median_um": 2.9819508514593065,
+   "p95_um": 5.481229262802054,
+   "max_rot_deg": 0.001031695637111901
+  }
+ },
+ "processing_time": {
+  "분리 (검증, 하위 트리 제거)": {
+   "n": 600,
+   "median_ms": 0.0082355,
+   "p95_ms": 0.011996699999999999,
+   "max_ms": 0.061421
+  },
+  "장착 (명세 검증)": {
+   "n": 600,
+   "median_ms": 0.051287,
+   "p95_ms": 0.08164085,
+   "max_ms": 0.194453
+  },
+  "능력 목록 재평가": {
+   "n": 1200,
+   "median_ms": 0.0375355,
+   "p95_ms": 0.0607367,
+   "max_ms": 0.25406100000000004
+  },
+  "URDF 생성 (BHL 메쉬 포함)": {
+   "n": 1200,
+   "median_ms": 3.3095015,
+   "p95_ms": 4.9724858,
+   "max_ms": 12.725642
+  },
+  "요청 1회 전체": {
+   "n": 1200,
+   "median_ms": 3.387127,
+   "p95_ms": 5.09493905,
+   "max_ms": 12.858034
+  }
+ },
+ "environment": {
+  "python": "3.13.16",
+  "machine": "x86_64",
+  "cpu": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "numpy": "2.5.3"
+ },
+ "urdf_changes": [
+  [
+   "B",
+   14,
+   14,
+   2,
+   2,
+   2,
+   2,
+   12,
+   12,
+   2,
+   2
+  ],
+  [
+   "C",
+   0,
+   105,
+   0,
+   16,
+   0,
+   16,
+   12,
+   7,
+   0,
+   11
+  ],
+  [
+   "D",
+   0,
+   28,
+   0,
+   4,
+   0,
+   4,
+   12,
+   12,
+   0,
+   4
+  ],
+  [
+   "E",
+   0,
+   61,
+   0,
+   8,
+   0,
+   8,
+   12,
+   10,
+   0,
+   6
+  ],
+  [
+   "E′",
+   0,
+   14,
+   0,
+   2,
+   0,
+   2,
+   12,
+   12,
+   0,
+   2
+  ]
+ ],
+ "rejections": [
+  {
+   "step": 8,
+   "attempt": "head_zed2i → torso.N (호스트 control_pc)",
+   "reasons": [
+    "포트 타입 불일치: torso.N는 head_mount, head_zed2i는 camera_1_4_20에 결합"
+   ]
+  },
+  {
+   "step": 8,
+   "attempt": "head_zed2i → neck.mount (호스트 rdk_x5)",
+   "reasons": [
+    "호스트 rdk_x5에 cuda 없음 (head_zed2i 요구)"
+   ]
+  },
+  {
+   "step": 8,
+   "attempt": "hand_dexhand_v1 → torso.S_L (호스트 control_pc)",
+   "reasons": [
+    "포트 사용 중: torso.S_L ← l_arm",
+    "포트 타입 불일치: torso.S_L는 shoulder_bhl, hand_dexhand_v1는 hand_d84에 결합"
+   ]
+  },
+  {
+   "step": null,
+   "attempt": "arm_bhl(L) → torso.S_R",
+   "reasons": [
+    "좌우 불일치: 포트는 R, 모듈은 L"
+   ]
+  }
+ ],
+ "plans": {
+  "A": "hand_over(R_hand)",
+  "B": "hand_over(R_gripper)",
+  "C": "hand_over(L_hand)",
+  "D": "reject(no_grasp)",
+  "E": "reject(no_vision)",
+  "E′": "reject(no_vision)"
+ }
+}
