@@ -1,0 +1,47 @@
+# 목 모듈 (요, 틸트 2자유도). 실제 로봇 사진(2026-10-23) 기준 구성, 치수는 추정값.
+#  - 요(팬) 서보: 앞쪽 상단 2020 바에 고정한 3D 프린트 홀더 안에 세워 넣고 귀를 홀더 윗면에 나사 고정
+#  - 틸트 서보: 요 혼 위 ㄷ자 채널 브래킷에 눕혀 장착, 출력축은 오른쪽(-y)
+#  - ㄷ자 알루미늄 브래킷: 틸트 혼(오른쪽)과 아이들러(왼쪽)가 받치고, 윗판에 카메라 1/4"-20 나사
+# 표준 DH: A_i = Rz(theta_i) Tz(d_i) Tx(a_i) Rx(alpha_i), theta_i = q_i + theta0_i
+# 모듈 기준 좌표계 = 몸통 포트 N = DH {0}: z = 요 축 = 결합 방향(위). 틸트 축은 요 축과 만난다고 가정(a_1 = 0).
+# q_pan > 0: 왼쪽(+y)을 봄, q_tilt > 0: 아래를 봄 (REP-103 요, 피치 방향)
+# 나누는 기준: 구조가 정하는 값은 기계(DH, 기구 범위, 질량), 구동기나 소프트웨어가 정하는 값은 제어(주기, 토크, 속도, 소프트 한계, 영점).
+id: neck_pan_tilt_scs
+name: 목 모듈 (요, 틸트)
+kind: actuator
+fb:
+  mechanical:
+    mates_with: head_mount
+    mass_kg: null               # 서보 2개(각 약 59 g) + 브래킷, 미측정
+    kinematics:
+      type: dh_standard
+      length_unit: mm
+      angle_unit: deg
+      joints:                   # range = 기구 범위: 서보 회전 범위 200도(SCS15 매뉴얼)의 가운데를 q = 0으로 가정,
+                                # 틸트 뒤쪽은 브래킷 윗판이 팬 브래킷에 닿기 전까지 (모델 기준 약 -71도)
+        - {hw: head_pan_joint,  a: 0, alpha: -90, d: 28, theta0: 0, range: [-100, 100]}   # 요: z_0 = 위, 틸트 축까지 28 mm
+        - {hw: head_tilt_joint, a: 0, alpha: 90,  d: 0,  theta0: 0, range: [-70, 100]}    # 틸트: z_1 = +y (요를 따라 회전)
+    frames:
+      mount: {parent: dh2, xyz: [0, 0, 36]}            # ㄷ자 브래킷 윗판 = 카메라 결합면 (1/4"-20)
+    ports:
+      - {name: mount, type: camera_1_4_20, frame: mount}
+  electrical:
+    bus: scs_ttl                # Feetech SCS 반이중 TTL 직렬 버스, 기본 1 Mbps
+    ids: []                     # 요, 틸트 서보 ID (라벨 확인 후 기입하면 같은 버스 ID 충돌 검사에 쓰임)
+    power: {voltage_v: 6.0}
+    host_requirements: {usb: true}   # USB-TTL 변환기로 연결한다고 가정
+  control:
+    rate_hz: 50
+    effort: 1.5                 # N m, 약 15 kgf cm (SCS15 정격 표기 기준, 모델 확인 필요)
+    velocity: 6.5               # rad/s, 약 62 rpm
+    soft_limits:                # 사용 범위 (임시), URDF limit에 들어감
+      head_pan_joint: [-90, 90]
+      head_tilt_joint: [-40, 60]
+    zero_offset:                # 서보 위치값(0~1023)과 q = 0의 대응, 캘리브레이션 후 기입
+      head_pan_joint: null
+      head_tilt_joint: null
+    position_steps: 1024        # 약 0.2도
+  functional:
+    skills:
+      - name: "look_at(point)"
+        requires: {frames: [mount], capabilities: ["detect(object)"]}

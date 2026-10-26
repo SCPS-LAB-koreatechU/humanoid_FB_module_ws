@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# colcon
+build/
+install/
+log/
+
+# generated
+bhl_module_manager/out/
+experiments/software_verification/fonts/
+experiments/software_verification/out/

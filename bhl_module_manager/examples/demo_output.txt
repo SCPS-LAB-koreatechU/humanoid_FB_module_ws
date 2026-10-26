@@ -1,0 +1,77 @@
+
+=== A 기본 구성 (설정 파일로 전체 장착)
+  TF 프레임 +0 -0 (현재 32개), 관절 12개
+  "빼빼로 건네줘" → hand_over(R_hand)
+  URDF 저장: examples/urdf/A.urdf
+
+=== B 손 교체: 오른손 분리 후 그리퍼 장착
+  [OK ] detach r_hand: 분리: r_hand (DexHand V1.0 손, R)
+  [OK ] attach r_conn.hand ← gripper_placeholder: 장착: r_grip (평행 그리퍼 (임시), R) → r_conn.hand (r_conn/C)
+  TF 프레임 +2 -2 (현재 32개), 관절 12개
+  능력 추가: grasp(R_gripper), hand_over(R_gripper)
+  능력 제거: grasp(R_hand), hand_over(R_hand), handshake(R_arm, R_hand), open_hand(R_hand)
+  "빼빼로 건네줘" → hand_over(R_gripper)
+  URDF 저장: examples/urdf/B.urdf
+
+=== A로 복귀: 그리퍼 분리, 오른손 재장착
+  [OK ] detach r_grip: 분리: r_grip (평행 그리퍼 (임시), R)
+  [OK ] attach r_conn.hand ← hand_dexhand_v1: 장착: r_hand (DexHand V1.0 손, R) → r_conn.hand (r_conn/C)
+  TF 프레임 +2 -2 (현재 32개), 관절 12개
+  능력 추가: grasp(R_hand), hand_over(R_hand), handshake(R_arm, R_hand), open_hand(R_hand)
+  능력 제거: grasp(R_gripper), hand_over(R_gripper)
+  "빼빼로 건네줘" → hand_over(R_hand)
+
+=== C 오른팔 분리 (손, 커넥터 포함 하위 트리 제거)
+  [OK ] detach r_arm: 분리: r_hand (DexHand V1.0 손, R); 분리: r_conn (손 커넥터 Ø84, R); 분리: r_arm (BHL 팔 모듈, R)
+  TF 프레임 +0 -11 (현재 21개), 관절 7개
+  능력 제거: grasp(R_hand), hand_over(R_hand), handshake(R_arm, R_hand), open_hand(R_hand), wave(R_arm)
+  "빼빼로 건네줘" → hand_over(L_hand)
+  URDF 저장: examples/urdf/C.urdf
+
+=== A로 복귀: 오른팔, 커넥터, 손 재장착
+  [OK ] attach torso.S_R ← arm_bhl: 장착: r_arm (BHL 팔 모듈, R) → torso.S_R (torso/S_R)
+  [OK ] attach r_arm.flange ← connector_d84: 장착: r_conn (손 커넥터 Ø84, R) → r_arm.flange (r_arm/F)
+  [OK ] attach r_conn.hand ← hand_dexhand_v1: 장착: r_hand (DexHand V1.0 손, R) → r_conn.hand (r_conn/C)
+  TF 프레임 +11 -0 (현재 32개), 관절 12개
+  능력 추가: grasp(R_hand), hand_over(R_hand), handshake(R_arm, R_hand), open_hand(R_hand), wave(R_arm)
+  "빼빼로 건네줘" → hand_over(R_hand)
+
+=== D 양손 분리
+  [OK ] detach r_hand: 분리: r_hand (DexHand V1.0 손, R)
+  [OK ] detach l_hand: 분리: l_hand (DexHand V1.0 손, L)
+  TF 프레임 +0 -4 (현재 28개), 관절 12개
+  능력 제거: grasp(L_hand), grasp(R_hand), hand_over(L_hand), hand_over(R_hand), handshake(L_arm, L_hand), handshake(R_arm, R_hand), open_hand(L_hand), open_hand(R_hand)
+  "빼빼로 건네줘" → reject(no_grasp) (전달에 쓸 손이나 그리퍼가 없음)
+  URDF 저장: examples/urdf/D.urdf
+
+=== A로 복귀: 양손 재장착
+  [OK ] attach r_conn.hand ← hand_dexhand_v1: 장착: r_hand (DexHand V1.0 손, R) → r_conn.hand (r_conn/C)
+  [OK ] attach l_conn.hand ← hand_dexhand_v1: 장착: l_hand (DexHand V1.0 손, L) → l_conn.hand (l_conn/C)
+  TF 프레임 +4 -0 (현재 32개), 관절 12개
+  능력 추가: grasp(L_hand), grasp(R_hand), hand_over(L_hand), hand_over(R_hand), handshake(L_arm, L_hand), handshake(R_arm, R_hand), open_hand(L_hand), open_hand(R_hand)
+  "빼빼로 건네줘" → hand_over(R_hand)
+
+=== E 머리 분리 (목 모듈을 ZED 2i째로 분리)
+  [OK ] detach neck: 분리: head (머리 모듈 (ZED 2i)); 분리: neck (목 모듈 (요, 틸트))
+  TF 프레임 +0 -6 (현재 26개), 관절 10개
+  능력 제거: detect(object), hand_over(L_hand), hand_over(R_hand), locate_hand(person), look_at(point)
+  "빼빼로 건네줘" → reject(no_vision) (받는 사람 손 위치를 알 수 없음 (카메라 모듈 없음))
+  URDF 저장: examples/urdf/E.urdf
+
+=== 검증 사례: 잘못된 장착 시도 후 머리 복귀
+  [거부] attach torso.N ← head_zed2i: 포트 타입 불일치: torso.N는 head_mount, head_zed2i는 camera_1_4_20에 결합
+  [OK ] attach torso.N ← neck_pan_tilt_scs: 장착: neck (목 모듈 (요, 틸트)) → torso.N (torso/N)
+  [거부] attach neck.mount ← head_zed2i: 호스트 rdk_x5에 cuda 없음 (head_zed2i 요구)
+  [거부] attach torso.S_L ← hand_dexhand_v1: 포트 사용 중: torso.S_L ← l_arm; 포트 타입 불일치: torso.S_L는 shoulder_bhl, hand_dexhand_v1는 hand_d84에 결합
+  [OK ] attach neck.mount ← head_zed2i: 장착: head (머리 모듈 (ZED 2i)) → neck.mount (neck/mount)
+  TF 프레임 +6 -0 (현재 32개), 관절 12개
+  능력 추가: detect(object), hand_over(L_hand), hand_over(R_hand), locate_hand(person), look_at(point)
+  "빼빼로 건네줘" → hand_over(R_hand)
+
+=== 카메라만 분리 (목 관절은 남음)
+  [OK ] detach head: 분리: head (머리 모듈 (ZED 2i))
+  TF 프레임 +0 -2 (현재 30개), 관절 12개
+  능력 제거: detect(object), hand_over(L_hand), hand_over(R_hand), locate_hand(person), look_at(point)
+  "빼빼로 건네줘" → reject(no_vision) (받는 사람 손 위치를 알 수 없음 (카메라 모듈 없음))
+
+로그: examples/plug_log.json

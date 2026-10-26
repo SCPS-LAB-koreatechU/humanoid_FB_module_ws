@@ -1,0 +1,180 @@
+{
+ "A": {
+  "available": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "hand_over(L_hand)",
+   "hand_over(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "unavailable": {},
+  "plan": "hand_over(R_hand)",
+  "joints": [
+   "arm_right_shoulder_pitch_joint",
+   "arm_right_shoulder_roll_joint",
+   "arm_right_shoulder_yaw_joint",
+   "arm_right_elbow_pitch_joint",
+   "arm_right_elbow_roll_joint",
+   "arm_left_shoulder_pitch_joint",
+   "arm_left_shoulder_roll_joint",
+   "arm_left_shoulder_yaw_joint",
+   "arm_left_elbow_pitch_joint",
+   "arm_left_elbow_roll_joint",
+   "head_pan_joint",
+   "head_tilt_joint"
+  ]
+ },
+ "B": {
+  "available": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "grasp(R_gripper)",
+   "hand_over(L_hand)",
+   "hand_over(R_gripper)",
+   "handshake(L_arm, L_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "unavailable": {
+   "handshake(R_arm, R_hand)": "open_hand(R_hand) 없음"
+  },
+  "plan": "hand_over(R_gripper)",
+  "joints": [
+   "arm_right_shoulder_pitch_joint",
+   "arm_right_shoulder_roll_joint",
+   "arm_right_shoulder_yaw_joint",
+   "arm_right_elbow_pitch_joint",
+   "arm_right_elbow_roll_joint",
+   "arm_left_shoulder_pitch_joint",
+   "arm_left_shoulder_roll_joint",
+   "arm_left_shoulder_yaw_joint",
+   "arm_left_elbow_pitch_joint",
+   "arm_left_elbow_roll_joint",
+   "head_pan_joint",
+   "head_tilt_joint"
+  ]
+ },
+ "C": {
+  "available": [
+   "detect(object)",
+   "grasp(L_hand)",
+   "hand_over(L_hand)",
+   "handshake(L_arm, L_hand)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "open_hand(L_hand)",
+   "wave(L_arm)"
+  ],
+  "unavailable": {},
+  "plan": "hand_over(L_hand)",
+  "joints": [
+   "arm_left_shoulder_pitch_joint",
+   "arm_left_shoulder_roll_joint",
+   "arm_left_shoulder_yaw_joint",
+   "arm_left_elbow_pitch_joint",
+   "arm_left_elbow_roll_joint",
+   "head_pan_joint",
+   "head_tilt_joint"
+  ]
+ },
+ "D": {
+  "available": [
+   "detect(object)",
+   "locate_hand(person)",
+   "look_at(point)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "unavailable": {
+   "handshake(R_arm, R_hand)": "open_hand(R_hand) 없음",
+   "handshake(L_arm, L_hand)": "open_hand(L_hand) 없음"
+  },
+  "plan": "reject(no_grasp)",
+  "joints": [
+   "arm_right_shoulder_pitch_joint",
+   "arm_right_shoulder_roll_joint",
+   "arm_right_shoulder_yaw_joint",
+   "arm_right_elbow_pitch_joint",
+   "arm_right_elbow_roll_joint",
+   "arm_left_shoulder_pitch_joint",
+   "arm_left_shoulder_roll_joint",
+   "arm_left_shoulder_yaw_joint",
+   "arm_left_elbow_pitch_joint",
+   "arm_left_elbow_roll_joint",
+   "head_pan_joint",
+   "head_tilt_joint"
+  ]
+ },
+ "E": {
+  "available": [
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "unavailable": {
+   "hand_over(R_hand)": "locate_hand(person) 없음",
+   "hand_over(L_hand)": "locate_hand(person) 없음"
+  },
+  "plan": "reject(no_vision)",
+  "joints": [
+   "arm_right_shoulder_pitch_joint",
+   "arm_right_shoulder_roll_joint",
+   "arm_right_shoulder_yaw_joint",
+   "arm_right_elbow_pitch_joint",
+   "arm_right_elbow_roll_joint",
+   "arm_left_shoulder_pitch_joint",
+   "arm_left_shoulder_roll_joint",
+   "arm_left_shoulder_yaw_joint",
+   "arm_left_elbow_pitch_joint",
+   "arm_left_elbow_roll_joint"
+  ]
+ },
+ "E′": {
+  "available": [
+   "grasp(L_hand)",
+   "grasp(R_hand)",
+   "handshake(L_arm, L_hand)",
+   "handshake(R_arm, R_hand)",
+   "open_hand(L_hand)",
+   "open_hand(R_hand)",
+   "wave(L_arm)",
+   "wave(R_arm)"
+  ],
+  "unavailable": {
+   "hand_over(R_hand)": "locate_hand(person) 없음",
+   "hand_over(L_hand)": "locate_hand(person) 없음",
+   "look_at(point)": "detect(object) 없음"
+  },
+  "plan": "reject(no_vision)",
+  "joints": [
+   "arm_right_shoulder_pitch_joint",
+   "arm_right_shoulder_roll_joint",
+   "arm_right_shoulder_yaw_joint",
+   "arm_right_elbow_pitch_joint",
+   "arm_right_elbow_roll_joint",
+   "arm_left_shoulder_pitch_joint",
+   "arm_left_shoulder_roll_joint",
+   "arm_left_shoulder_yaw_joint",
+   "arm_left_elbow_pitch_joint",
+   "arm_left_elbow_roll_joint",
+   "head_pan_joint",
+   "head_tilt_joint"
+  ]
+ }
+}

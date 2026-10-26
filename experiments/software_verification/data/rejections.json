@@ -1,0 +1,31 @@
+[
+ {
+  "step": 8,
+  "attempt": "head_zed2i → torso.N (호스트 control_pc)",
+  "reasons": [
+   "포트 타입 불일치: torso.N는 head_mount, head_zed2i는 camera_1_4_20에 결합"
+  ]
+ },
+ {
+  "step": 8,
+  "attempt": "head_zed2i → neck.mount (호스트 rdk_x5)",
+  "reasons": [
+   "호스트 rdk_x5에 cuda 없음 (head_zed2i 요구)"
+  ]
+ },
+ {
+  "step": 8,
+  "attempt": "hand_dexhand_v1 → torso.S_L (호스트 control_pc)",
+  "reasons": [
+   "포트 사용 중: torso.S_L ← l_arm",
+   "포트 타입 불일치: torso.S_L는 shoulder_bhl, hand_dexhand_v1는 hand_d84에 결합"
+  ]
+ },
+ {
+  "step": null,
+  "attempt": "arm_bhl(L) → torso.S_R",
+  "reasons": [
+   "좌우 불일치: 포트는 R, 모듈은 L"
+  ]
+ }
+]

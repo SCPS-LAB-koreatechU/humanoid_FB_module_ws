@@ -1,0 +1,20 @@
+# 몸통 모듈 (기준 모듈). 정찬우.3dm 상반신, BHL URDF base 좌표계 기준.
+# 포트 좌표계의 z축 = 결합 방향 (자식 모듈이 이 축을 따라 꽂히고 빠진다).
+id: torso_bhl
+name: BHL 몸통
+kind: base
+fb:
+  mechanical:
+    root_frame: base            # URDF base 좌표계 (지면 높이, x 전방, z 위)
+    mass_kg: null               # 정찬우.3dm 몸통 구성 기준 질량 미측정
+    frames:
+      S_R: {xyz: [0, -133, 764.03], rpy: [90, 0, 0]}    # 오른 어깨 포트, z = -y
+      S_L: {xyz: [0, 133, 764.03], rpy: [-90, 0, 0]}    # 왼 어깨 포트, z = +y
+      N:   {xyz: [38, 0, 848], rpy: [0, 0, 0]}          # 머리 포트: 서보 홀더 윗면, 요 축 위, z = +z (앞쪽 상단 2020 바 뒷면에 홀더 고정)
+    ports:
+      - {name: S_R, type: shoulder_bhl, frame: S_R, side: R}
+      - {name: S_L, type: shoulder_bhl, frame: S_L, side: L}
+      - {name: N, type: head_mount, frame: N}
+  electrical: {bus: null}
+  control: {}
+  functional: {skills: []}

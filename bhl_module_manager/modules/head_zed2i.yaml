@@ -1,0 +1,25 @@
+# 머리 모듈: ZED 2i (Stereolabs 공식 사양). 목 모듈 ㄷ자 브래킷 윗판에 바닥 1/4"-20 나사로 체결.
+# 모듈 기준 좌표계 = 결합면 = 바닥 나사 구멍 = zed_camera_link.
+# zed_wrapper가 zed_camera_link 아래(camera_center, 좌우 카메라, optical frame)를 직접 발행하므로
+# 이 모듈은 zed_camera_link까지만 TF로 내보낸다.
+id: head_zed2i
+name: 머리 모듈 (ZED 2i)
+kind: sensor
+fb:
+  mechanical:
+    mates_with: camera_1_4_20
+    mass_kg: 0.230              # ZED 2i 본체
+    frames:
+      camera_link: {xyz: [0, 0, 0], tf_name: zed_camera_link}                    # 바닥 1/4"-20 나사 구멍
+      cam: {parent: camera_link, xyz: [0, 0, 15], rpy: [0, 0, 0], export: false}  # camera_center
+  electrical:
+    bus: usb3
+    power: {voltage_v: 5, current_ma: 380}
+    host_requirements: {cuda: true, usb3: true}   # ZED SDK는 NVIDIA GPU 필요
+  control: {depth_rate_hz_max: 100}
+  functional:
+    skills:
+      - name: "locate_hand(person)"
+        requires: {frames: [cam], host: [cuda]}
+      - name: "detect(object)"
+        requires: {frames: [cam], host: [cuda]}

@@ -1,0 +1,9 @@
+# 구성 E: 머리 분리 (목 모듈을 ZED 2i째로 분리)
+base: {module: torso_bhl, id: torso}
+attach:
+- {port: torso.S_R, module: arm_bhl, id: r_arm, host: control_pc}
+- {port: r_arm.flange, module: connector_d84, id: r_conn}
+- {port: r_conn.hand, module: hand_dexhand_v1, id: r_hand, host: control_pc}
+- {port: torso.S_L, module: arm_bhl, id: l_arm, host: control_pc}
+- {port: l_arm.flange, module: connector_d84, id: l_conn}
+- {port: l_conn.hand, module: hand_dexhand_v1, id: l_hand, host: control_pc}

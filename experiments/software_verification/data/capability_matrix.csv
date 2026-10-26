@@ -1,0 +1,16 @@
+﻿능력,A,B,C,D,E,E′
+detect(object),가능,가능,가능,가능,모듈 없음,모듈 없음
+grasp(L_hand),가능,가능,가능,모듈 없음,가능,가능
+grasp(R_gripper),모듈 없음,가능,모듈 없음,모듈 없음,모듈 없음,모듈 없음
+grasp(R_hand),가능,모듈 없음,모듈 없음,모듈 없음,가능,가능
+hand_over(L_hand),가능,가능,가능,모듈 없음,불가: locate_hand(person) 없음,불가: locate_hand(person) 없음
+hand_over(R_gripper),모듈 없음,가능,모듈 없음,모듈 없음,모듈 없음,모듈 없음
+hand_over(R_hand),가능,모듈 없음,모듈 없음,모듈 없음,불가: locate_hand(person) 없음,불가: locate_hand(person) 없음
+"handshake(L_arm, L_hand)",가능,가능,가능,불가: open_hand(L_hand) 없음,가능,가능
+"handshake(R_arm, R_hand)",가능,불가: open_hand(R_hand) 없음,모듈 없음,불가: open_hand(R_hand) 없음,가능,가능
+locate_hand(person),가능,가능,가능,가능,모듈 없음,모듈 없음
+look_at(point),가능,가능,가능,가능,모듈 없음,불가: detect(object) 없음
+open_hand(L_hand),가능,가능,가능,모듈 없음,가능,가능
+open_hand(R_hand),가능,모듈 없음,모듈 없음,모듈 없음,가능,가능
+wave(L_arm),가능,가능,가능,가능,가능,가능
+wave(R_arm),가능,가능,모듈 없음,가능,가능,가능

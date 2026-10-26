@@ -1,0 +1,9 @@
+# 구성 D: 양손 분리
+base: {module: torso_bhl, id: torso}
+attach:
+- {port: torso.S_R, module: arm_bhl, id: r_arm, host: control_pc}
+- {port: r_arm.flange, module: connector_d84, id: r_conn}
+- {port: torso.S_L, module: arm_bhl, id: l_arm, host: control_pc}
+- {port: l_arm.flange, module: connector_d84, id: l_conn}
+- {port: torso.N, module: neck_pan_tilt_scs, id: neck, host: control_pc}
+- {port: neck.mount, module: head_zed2i, id: head, host: control_pc}
