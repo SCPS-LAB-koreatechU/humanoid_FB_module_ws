@@ -8,6 +8,6 @@ install/
 log/
 
 # generated
-bhl_module_manager/out/
-experiments/software_verification/fonts/
-experiments/software_verification/out/
+papers/2026_fb_modular_system/bhl_module_manager/out/
+papers/2026_fb_modular_system/experiments/software_verification/fonts/
+papers/2026_fb_modular_system/experiments/software_verification/out/
